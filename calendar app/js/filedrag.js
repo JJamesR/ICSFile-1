@@ -22,12 +22,12 @@
 		var startTime;
 		var endDate;
 		var endTime;
-		var location='';
-		var title='';
-		var description='';
+		var location;
+		var title;
+		var description;
 		//le calendarId sera défini par la fonction persistEvent
 		
-		var callform;
+
 		
 	 for(var key in icalParser.ical.events)
 	 {
@@ -36,39 +36,34 @@
 
 		 
 		 //si les attributs ne sont pas renseignés dans l'ICS event
-		 //si non présent, la valeur initiale reste inchangée : ''
-		 
-		 if(icalParser.ical.events[key].location['value'] == null){
-			location=icalParser.ical.events[key].location['value'];
-		}
-		if(icalParser.ical.events[key].summary['value']){
-			title=icalParser.ical.events[key].summary['value'];
-		}
-		if(icalParser.ical.events[key].description['value']){
-			description=icalParser.ical.events[key].description['value'];
-		}
-		 
-		 
-		 //FONCTION PARSE DATE
-		//DATE AU FORMAT YYYYMMDD-hhmmss
-		startDate=ParseICSDate(icalParser.ical.events[key].dtstart['value'],'date');
-		startTime=ParseICSDate(icalParser.ical.events[key].dtstart['value'],'time');
-		//recup date et recup time -> le parser prendra la (date,time)
-		//idem ici
-		endDate=ParseICSDate(icalParser.ical.events[key].dtend['value'],'date');
-		endTime=ParseICSDate(icalParser.ical.events[key].dtend['value'],'time');
+		 //si non présent, la valeur initiale reste inchangée : ''	 
+	   if (icalParser.ical.events[key].dtstart==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtstart=== undefined)  console.log("description  null/undefined" );
+ 		else console.log("DSTART VALUE : " +icalParser.ical.events[key].dtstart['value']);
 
+  	    if (icalParser.ical.events[key].dtstamp==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtstamp=== undefined)  console.log("description  null/undefined" );
+		else console.log("DSTAMP VALUE : " +icalParser.ical.events[key].dtstamp['value']);
+  	    
+		if (icalParser.ical.events[key].dtend==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtend=== undefined)  console.log("description  null/undefined" );
+		else console.log("DTEND VALUE : " +icalParser.ical.events[key].dtend['value']);
 
-         console.log("------");
-		 console.log("Event N°"+key+ " : ");	
-	     console.log("DESCRIPTION VALUE : " +description);
-		 console.log("LOCATION VALUE : " +location);
-	     console.log("SUMMARY VALUE : " +title);
-	     console.log("DTEND VALUE : " +endDate+" "+endTime);
-	     console.log("DSTART VALUE : " +startDate+" "+startTime);
-         console.log("------");	 
+		if (icalParser.ical.events[key].uid==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].uid=== undefined)  console.log("description  null/undefined" );
+		else console.log("UID VALUE : " +icalParser.ical.events[key].uid['value']);
 
-		
+		if (icalParser.ical.events[key].description==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].description=== undefined)  console.log("description  null/undefined" );
+		else console.log("Descritpion VALUE : " +icalParser.ical.events[key].description['value']);
+
+		if (icalParser.ical.events[key].location==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].location=== undefined)  console.log("location null/undefined" );
+		else console.log("location VALUE : " +icalParser.ical.events[key].location['value']);
+
+		if (icalParser.ical.events[key].summary==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].summary=== undefined)  console.log("summary  null/undefined" );
+		else console.log("summary VALUE : " +icalParser.ical.events[key].summary['value']);
+
+		if (icalParser.ical.events[key].trigger==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].trigger=== undefined)  console.log("trigger  null/undefined" );
+		else console.log("Trigger VALUE : " +icalParser.ical.events[key].trigger['value']);
+
+		if (icalParser.ical.events[key].action==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].action=== undefined)  console.log("action  null/undefined" );
+		else console.log("Action VALUE : " +icalParser.ical.events[key].action['value']);
+
 	 }	
 	}
 
