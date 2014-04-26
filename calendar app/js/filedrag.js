@@ -17,26 +17,36 @@
 		icalParser.ical.version; 
 		icalParser.ical.prodid;
 		
-		
+		//A DEPLACER DANS FORMICSDATA lorsque la fonction sera implémentée
 		var startDate;
 		var startTime;
 		var endDate;
 		var endTime;
-		var location;
-		var title;
-		var description;
+		var location='';
+		var title='';
+		var description='';
 		//le calendarId sera défini par la fonction persistEvent
+		
+		var callform;
 		
 	 for(var key in icalParser.ical.events)
 	 {
-         console.log("------");
-		 console.log("Event N°"+key+ " : ");
-	     console.log("DSTART VALUE : " +icalParser.ical.events[key].dtstart['value']);
-		 //console.log("LOCATION VALUE : " +icalParser.ical.events[key].location['value']);
-	     //console.log("SUMMARY VALUE : " +icalParser.ical.events[key].summary['value']);
-	     console.log("DTEND VALUE : " +icalParser.ical.events[key].dtend['value']);
-	     //console.log("DESCRIPTION VALUE : " +icalParser.ical.events[key].description['value']);
-         console.log("------");	 
+		//EQUIVALENT DU TRAITEMENT QUE DEVRA REALISER ICSFORMDATA
+		//A DEPLACER LORSQUE LA FONCTION ICSFORMDATA SERA CREEE
+
+		 
+		 //si les attributs ne sont pas renseignés dans l'ICS event
+		 //si non présent, la valeur initiale reste inchangée : ''
+		 
+		 if(icalParser.ical.events[key].location['value'] == null){
+			location=icalParser.ical.events[key].location['value'];
+		}
+		if(icalParser.ical.events[key].summary['value']){
+			title=icalParser.ical.events[key].summary['value'];
+		}
+		if(icalParser.ical.events[key].description['value']){
+			description=icalParser.ical.events[key].description['value'];
+		}
 		 
 		 
 		 //FONCTION PARSE DATE
@@ -47,11 +57,18 @@
 		//idem ici
 		endDate=ParseICSDate(icalParser.ical.events[key].dtend['value'],'date');
 		endTime=ParseICSDate(icalParser.ical.events[key].dtend['value'],'time');
+
+
+         console.log("------");
+		 console.log("Event N°"+key+ " : ");	
+	     console.log("DESCRIPTION VALUE : " +description);
+		 console.log("LOCATION VALUE : " +location);
+	     console.log("SUMMARY VALUE : " +title);
+	     console.log("DTEND VALUE : " +endDate+" "+endTime);
+	     console.log("DSTART VALUE : " +startDate+" "+startTime);
+         console.log("------");	 
+
 		
-		
-		//COMMENTAIRE A SUPPR : on verifie que le parseur date a fait son taf
-		console.log("PARS DDEB:"+startDate);
-		console.log("PARS HDEB"+startTime);
 	 }	
 	}
 
@@ -153,4 +170,9 @@ var encodedData= "QkVHSU46VkNBTEVOREFSDQpQUk9ESUQ6LS8vTWljcm9zb2Z0IENvcnBvcmF0aW
 		}
 			return icsDate;
 	}
+	function formICSData(event){
+		//pb : je n'arrive pas a manipuler l'event en dehors de la fonction Callicalendar()
+	}
+	
+	
 })();
