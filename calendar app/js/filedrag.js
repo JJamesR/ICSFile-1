@@ -25,45 +25,59 @@
 		var location;
 		var title;
 		var description;
+		var action;
+		var trigger;
 		//le calendarId sera défini par la fonction persistEvent
 		
 
 		
 	 for(var key in icalParser.ical.events)
 	 {
-		//EQUIVALENT DU TRAITEMENT QUE DEVRA REALISER ICSFORMDATA
-		//A DEPLACER LORSQUE LA FONCTION ICSFORMDATA SERA CREEE
+       console.log("------");
+		 console.log("Event NÂ°"+key+ " : ");
 
-		 
-		 //si les attributs ne sont pas renseignés dans l'ICS event
-		 //si non présent, la valeur initiale reste inchangée : ''	 
-	   if (icalParser.ical.events[key].dtstart==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtstart=== undefined)  console.log("description  null/undefined" );
- 		else console.log("DSTART VALUE : " +icalParser.ical.events[key].dtstart['value']);
-
-  	    if (icalParser.ical.events[key].dtstamp==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtstamp=== undefined)  console.log("description  null/undefined" );
-		else console.log("DSTAMP VALUE : " +icalParser.ical.events[key].dtstamp['value']);
-  	    
-		if (icalParser.ical.events[key].dtend==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtend=== undefined)  console.log("description  null/undefined" );
-		else console.log("DTEND VALUE : " +icalParser.ical.events[key].dtend['value']);
-
-		if (icalParser.ical.events[key].uid==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].uid=== undefined)  console.log("description  null/undefined" );
-		else console.log("UID VALUE : " +icalParser.ical.events[key].uid['value']);
-
-		if (icalParser.ical.events[key].description==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].description=== undefined)  console.log("description  null/undefined" );
-		else console.log("Descritpion VALUE : " +icalParser.ical.events[key].description['value']);
-
-		if (icalParser.ical.events[key].location==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].location=== undefined)  console.log("location null/undefined" );
-		else console.log("location VALUE : " +icalParser.ical.events[key].location['value']);
-
-		if (icalParser.ical.events[key].summary==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].summary=== undefined)  console.log("summary  null/undefined" );
-		else console.log("summary VALUE : " +icalParser.ical.events[key].summary['value']);
-
-		if (icalParser.ical.events[key].trigger==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].trigger=== undefined)  console.log("trigger  null/undefined" );
-		else console.log("Trigger VALUE : " +icalParser.ical.events[key].trigger['value']);
-
-		if (icalParser.ical.events[key].action==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].action=== undefined)  console.log("action  null/undefined" );
-		else console.log("Action VALUE : " +icalParser.ical.events[key].action['value']);
-
+		if (icalParser.ical.events[key].dtstart==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtstart=== undefined){
+			startDate="null/undefined";
+			startTime="null/undefined";
+		}else{
+			startDate=ParseICSDate(icalParser.ical.events[key].dtstart['value'],'date');
+			startTime=ParseICSDate(icalParser.ical.events[key].dtstart['value'],'time');
+		}
+		if (icalParser.ical.events[key].dtend==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].dtend=== undefined){
+			endDate="null/undefined";
+			endTime="null/undefined";
+		}else{
+			endDate=ParseICSDate(icalParser.ical.events[key].dtend['value'],'date');
+			endTime=ParseICSDate(icalParser.ical.events[key].dtend['value'],'time');
+		}
+		if (icalParser.ical.events[key].description==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].description=== undefined){
+			description = "description  null/undefined";
+		}else{ 
+			description = icalParser.ical.events[key].description['value'];
+		}
+		if (icalParser.ical.events[key].location==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].location=== undefined){
+			location = "null/undefined";
+		}else{ 
+			location= icalParser.ical.events[key].location['value'];
+		}
+		if (icalParser.ical.events[key].summary==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].summary=== undefined){
+			title="null/undefined";
+		}else{ 
+			title=icalParser.ical.events[key].summary['value'];
+		}
+		if (icalParser.ical.events[key].trigger==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].trigger=== undefined){
+			trigger="null/undefined";
+		}else{ 
+			trigger=icalParser.ical.events[key].trigger['value'];
+		}
+		if (icalParser.ical.events[key].action==null || icalParser.ical.events[key]=== undefined || icalParser.ical.events[key].action=== undefined){
+			action="null/undefined";
+		}else{ 
+			action=icalParser.ical.events[key].action['value'];
+		}
+        console.log("------");	
+	//formICS: function(arg_summary,arg_location,arg_description,arg_dstart,arg_dtend,arg_action,arg_triger,arg_dtime,arg_etime)		
+		//Calendar.ns('Views').ModifyEvent.formICS(title,location,description,startDate,endDate,action,trigger,startTime,endTime);
 	 }	
 	}
 

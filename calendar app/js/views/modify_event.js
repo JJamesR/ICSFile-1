@@ -425,7 +425,32 @@ Calendar.ns('Views').ModifyEvent = (function() {
         input.focus();
       }
     },
+	
+	formICS: function(arg_summary,arg_location,arg_description,arg_dstart,arg_dtend,arg_action,arg_triger,arg_dtime,arg_etime) {
+      var fields = {
+        title: args_summary,
+        location: arg_location,
+        description: arg_description,
+        calendarId: "local-first"
+      };
 
+      var startDate = arg_dstart;
+      var endDate = arg_dtend;
+	  var startTime = arg_dtime;
+	  var endTime = arg_etime;
+ 
+      fields.startDate = InputParser.formatInputDate(startDate,startTime);
+      fields.endDate = InputParser.formatInputDate(endDate,endTime);
+ 
+        fields.alarms = [];
+        fields.alarms.push(
+        {
+            action: arg_action,
+            trigger: arg_triger
+        });
+		console.log('FIN FormICS');
+      return fields;
+    },
     /**
      * Export form information into a format
      * the model can understand.
@@ -444,7 +469,7 @@ Calendar.ns('Views').ModifyEvent = (function() {
       var startTime;
       var endTime;
       var allday = this.getEl('allday').checked;
-
+	  
       if (allday) {
         startTime = null;
         endTime = null;

@@ -8,18 +8,24 @@ var icalParser={
 		freebusys:[]
 	},
 	parseIcal: function(icsString){
+	//console.log("test");
+
 		this.ical.version=this.getValue('VERSION',icsString);
 		this.ical.prodid=this.getValue('PRODID',icsString);
 		icsString=icsString.replace(/\r\n /g,'');
-		
-		var reg=/BEGIN:VEVENT(\r?\n[^B].*)+/g;
-		var matches=icsString.match(reg);
-		if(matches){
-			for(i=0;i<matches.length;i++){
+
+		var reg=/BEGIN:VEVENT(\r?\n[^VE].*)+/g;
+		var matches=icsString.match(reg);	
+		if(matches)
+		{
+			for(i=0;i<matches.length;i++)
+			{
 				//console.log(matches[i]);
-				this.parseVevent(matches[i]);
+					this.parseVevent(matches[i]);	
+
 			}
-		}
+		}	 
+
 		reg=/BEGIN:VTODO(\r?\n[^B].*)+/g;
 		matches=icsString.match(reg);
 		if(matches){
@@ -44,9 +50,11 @@ var icalParser={
 				this.parseVfreebusy(matches[i]);
 			}
 		}
+
 		//console.log('parsed');
 	},
-	parseVfreebusy: function(vfreeString){
+
+		parseVfreebusy: function(vfreeString){
 		////PROCHAINE VERSION: Générer seul les propriétés trouvées : + rapide
 		var freebusy={
 			contact:this.getValue('CONTACT',vfreeString), //
@@ -157,27 +165,31 @@ var icalParser={
 			//url:this.getValue('URL',veventString), //This property defines a Uniform Resource Locator (URL) associated with the iCalendar object.
 			//recurid:this.getValue('RECURRENCE-ID',veventString), //This property is used in conjunction with the "UID" and "SEQUENCE" property to identify a specific instance of a recurring "VEVENT", "VTODO" or "VJOURNAL" calendar component. The property value is the effective value of the "DTSTART" property of the recurrence instance.
 			//duration:this.getValue('DURATION',veventString), //The property specifies a positive duration of time.
-			//attach:this.getValue('ATTACH',veventString,true), //The property provides the capability to associate a document object with a calendar component.
-			//attendee:this.getValue('ATTENDEE',veventString,true), //The property defines an "Attendee" within a calendar component.
-			//categories:this.getValue('CATEGORIES',veventString,true), //This property defines the categories for a calendar component.
-			//comment:this.getValue('COMMENT',veventString,true), //This property specifies non-processing information intended to provide a comment to the calendar user.			
-			//contact:this.getValue('CONTACT',veventString,true), //The property is used to represent contact information or alternately a reference to contact information associated with the calendar component.
-			//exdate:this.getValue('EXDATE',veventString,true), //This property defines the list of date/time exceptions for a recurring calendar component.
-			//exrule:this.getValue('EXRULE',veventString,true), //This property defines a rule or repeating pattern for an exception to a recurrence set.
-			//rstatus:this.getValue('REQUEST-STATUS',veventString,true), //This property defines the status code returned for a scheduling request.			
-			//related:this.getValue('RELATED',veventString,true), //To specify the relationship of the alarm trigger with respect to the start or end of the calendar component.
-			//resources:this.getValue('RESOURCES',veventString,true), //This property defines the equipment or resources anticipated for an activity specified by a calendar entity..
-			//rdate:this.getValue('RDATE',veventString,true), //This property defines the list of date/times for a recurrence set.
-			//rrule:this.getValue('RRULE',veventString,true), //This property defines a rule or repeating pattern for recurring events, to-dos, or time zone definitions.
-			//xprop:this.getValue('X-',veventString,true), //
+			//	attach:this.getValue('ATTACH',veventString,true), //The property provides the capability to associate a document object with a calendar component.
+			//	attendee:this.getValue('ATTENDEE',veventString,true), //The property defines an "Attendee" within a calendar component.
+			//	categories:this.getValue('CATEGORIES',veventString,true), //This property defines the categories for a calendar component.
+			//	comment:this.getValue('COMMENT',veventString,true), //This property specifies non-processing information intended to provide a comment to the calendar user.			
+			//	contact:this.getValue('CONTACT',veventString,true), //The property is used to represent contact information or alternately a reference to contact information associated with the calendar component.
+			//	exdate:this.getValue('EXDATE',veventString,true), //This property defines the list of date/time exceptions for a recurring calendar component.
+			//	exrule:this.getValue('EXRULE',veventString,true), //This property defines a rule or repeating pattern for an exception to a recurrence set.
+			//	rstatus:this.getValue('REQUEST-STATUS',veventString,true), //This property defines the status code returned for a scheduling request.			
+			// 	related:this.getValue('RELATED',veventString,true), //To specify the relationship of the alarm trigger with respect to the start or end of the calendar component.
+			//	resources:this.getValue('RESOURCES',veventString,true), //This property defines the equipment or resources anticipated for an activity specified by a calendar entity..
+			//	rdate:this.getValue('RDATE',veventString,true), //This property defines the list of date/times for a recurrence set.
+			//	rrule:this.getValue('RRULE',veventString,true), //This property defines a rule or repeating pattern for recurring events, to-dos, or time zone definitions.
+			//	xprop:this.getValue('X-',veventString,true), //
 			uid:this.getValue('UID',veventString), //This property defines the persistent, globally unique identifier for the calendar component.
 			summary:this.getValue('SUMMARY',veventString), //This property defines a short summary or subject for the calendar component.
 			dtstart:this.getValue('DTSTART',veventString), //This property specifies when the calendar component begins.
-			dtend:this.getValue('DTEND',veventString) //This property specifies the date and time that a calendar component ends.
+			dtend:this.getValue('DTEND',veventString), //This property specifies the date and time that a calendar component ends.
+			trigger:this.getValue('TRIGGER',veventString), //time for riging alarms
+			action:this.getValue('ACTION',veventString), //display or not the alarm		
 		};
 		this.ical.events[this.ical.events.length]=event;
+
 	},
 	getValue: function(propName,txt,multiple){
+
 		if(multiple){
 			eval('var matches=txt.match(/\\n'+propName+'[^:]*/g)');
 			var props=[];
@@ -208,6 +220,7 @@ var icalParser={
 						tab_params[pair[0]] = pair[1];
 					}
 				}
+				//console.log(valeur);
 				//console.log(tab_params);
 				return {
 					value:valeur,
